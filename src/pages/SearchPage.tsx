@@ -226,7 +226,7 @@ export default function SearchPage() {
       {bookingResult && (
         <div className="modal-overlay" onClick={() => setBookingResult(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-icon">\u2713</div>
+            <div className="modal-icon">✓</div>
             <h2>Reserva confirmada</h2>
             <p className="muted">
               Tu reserva se creo correctamente.<br />
