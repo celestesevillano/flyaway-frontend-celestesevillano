@@ -341,6 +341,10 @@ input:focus {
   background: #fff0f5;
 }
 
+.cell-actions {
+  text-align: right;
+}
+
 .result-count {
   margin: 0 0 0.75rem;
   font-size: 0.85rem;
@@ -359,6 +363,11 @@ input:focus {
 .badge-muted {
   background: #f1f2f6;
   color: var(--text-muted);
+}
+
+.badge-ok {
+  background: var(--success-soft);
+  color: var(--success);
 }
 
 .muted {
@@ -380,6 +389,49 @@ input:focus {
 .empty-title {
   font-weight: 600;
   margin: 0 0 0.3rem;
+}
+
+.detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-label {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.detail-flight {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.15rem 0 0.1rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.1rem;
+  margin: 1.25rem 0 0;
+}
+
+.detail-grid dt {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.detail-grid dd {
+  margin: 0;
+  font-weight: 600;
 }
 
 @media (max-width: 560px) {
