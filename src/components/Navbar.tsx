@@ -31,7 +31,7 @@ export default function Navbar() {
           <span className="user-chip">
             {user ? `${user.firstName} ${user.lastName}` : 'Sesion activa'}
           </span>
-          <button type="button" className="btn btn-ghost" onClick={handleLogout}>
+          <button type="button" className="btn btn-primary" onClick={handleLogout}>
             Cerrar sesion
           </button>
         </div>
