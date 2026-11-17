@@ -1,7 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
+import BookingDetailPage from './pages/BookingDetailPage';
 import LoginPage from './pages/LoginPage';
+import MyBookingsPage from './pages/MyBookingsPage';
 import RegisterPage from './pages/RegisterPage';
 import SearchPage from './pages/SearchPage';
 
@@ -17,7 +19,8 @@ export default function App() {
           <Route path="/search" element={<SearchPage />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/bookings" element={<div className="page"><h1>Mis reservas</h1><p className="muted">Próximamente...</p></div>} />
+            <Route path="/bookings" element={<MyBookingsPage />} />
+            <Route path="/bookings/:id" element={<BookingDetailPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/search" replace />} />
