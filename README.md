@@ -2,8 +2,7 @@
 
 Frontend web de la app de reserva de vuelos **Fly Away**, para el Laboratorio de la Semana 14 de CS2031 (DBP).
 
-**Autora:** Celeste Sevillano  
-**Stack:** React 19 + TypeScript + Vite + Axios + React Router. Estilos en CSS plano (tema rosa).
+**Nombre:** Celeste Sevillano  
 
 ---
 
