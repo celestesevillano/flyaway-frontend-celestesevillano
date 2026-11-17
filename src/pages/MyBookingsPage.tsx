@@ -50,7 +50,7 @@ export default function MyBookingsPage() {
             {user ? `Reservas de ${user.firstName} ${user.lastName}` : 'Tus reservas guardadas'}
           </p>
         </div>
-        <button type="button" className="btn btn-ghost" onClick={() => void load()}>
+        <button type="button" className="btn btn-primary" onClick={() => void load()}>
           Actualizar
         </button>
       </header>
@@ -96,7 +96,7 @@ export default function MyBookingsPage() {
                     <td>{booking.airlineName}</td>
                     <td>{formatDateTime(booking.estDepartureTime)}</td>
                     <td className="cell-actions">
-                      <Link className="btn btn-ghost btn-sm" to={`/bookings/${booking.id}`}>
+                      <Link className="btn btn-primary btn-sm" to={`/bookings/${booking.id}`}>
                         Ver detalle
                       </Link>
                     </td>
