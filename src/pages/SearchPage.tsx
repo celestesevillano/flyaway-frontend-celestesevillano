@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
 import { errorMessage } from '../lib/api';
+import { useAuth } from '../lib/auth';
+import { addBookingId } from '../lib/bookingStorage';
 import { formatDateTime, toIsoOrUndefined } from '../lib/format';
-import { searchFlights } from '../lib/services';
+import { bookFlight, searchFlights } from '../lib/services';
 import type { Flight } from '../lib/types';
 
+interface BookingResult {
+  flightId: number;
+  bookingId: number;
+}
+
 export default function SearchPage() {
+  const { isAuthenticated, user } = useAuth();
+
   const [flightNumber, setFlightNumber] = useState('');
   const [airlineName, setAirlineName] = useState('');
   const [departureFrom, setDepartureFrom] = useState('');
@@ -17,9 +27,15 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [searchError, setSearchError] = useState('');
 
+  const [bookingFlightId, setBookingFlightId] = useState<number | null>(null);
+  const [bookingError, setBookingError] = useState('');
+  const [bookingResult, setBookingResult] = useState<BookingResult | null>(null);
+
   async function runSearch() {
     setLoading(true);
     setSearchError('');
+    setBookingError('');
+    setBookingResult(null);
     try {
       const items = await searchFlights({
         flightNumber: flightNumber.trim() || undefined,
@@ -52,6 +68,26 @@ export default function SearchPage() {
     setAirlineName('');
     setDepartureFrom('');
     setDepartureTo('');
+  }
+
+  async function handleBook(flight: Flight) {
+    setBookingError('');
+    setBookingResult(null);
+    setBookingFlightId(flight.id);
+    try {
+      const { id } = await bookFlight(flight.id);
+      setBookingResult({ flightId: flight.id, bookingId: id });
+      if (user?.email) addBookingId(user.email, id);
+      setFlights((prev) =>
+        prev.map((f) =>
+          f.id === flight.id ? { ...f, availableSeats: Math.max(0, f.availableSeats - 1) } : f,
+        ),
+      );
+    } catch (err) {
+      setBookingError(`No se pudo reservar ${flight.flightNumber}: ${errorMessage(err)}`);
+    } finally {
+      setBookingFlightId(null);
+    }
   }
 
   return (
@@ -117,6 +153,18 @@ export default function SearchPage() {
       </section>
 
       {searchError && <Alert kind="error">{searchError}</Alert>}
+      {bookingError && <Alert kind="error">{bookingError}</Alert>}
+      {bookingResult && (
+        <Alert kind="success">
+          Reserva confirmada. ID de reserva: <strong>#{bookingResult.bookingId}</strong>{' '}
+          <Link to={`/bookings/${bookingResult.bookingId}`}>Ver detalle</Link>
+        </Alert>
+      )}
+      {!isAuthenticated && (
+        <Alert kind="info">
+          <Link to="/login">Inicia sesion</Link> para poder reservar un vuelo.
+        </Alert>
+      )}
 
       <section className="card">
         {loading && <p className="muted">Cargando vuelos...</p>}
@@ -143,6 +191,7 @@ export default function SearchPage() {
                     <th>Salida</th>
                     <th>Llegada</th>
                     <th>Asientos</th>
+                    {isAuthenticated && <th aria-label="Acciones" />}
                   </tr>
                 </thead>
                 <tbody>
@@ -159,6 +208,18 @@ export default function SearchPage() {
                           {flight.availableSeats}
                         </span>
                       </td>
+                      {isAuthenticated && (
+                        <td className="cell-actions">
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-sm"
+                            onClick={() => void handleBook(flight)}
+                            disabled={bookingFlightId === flight.id}
+                          >
+                            {bookingFlightId === flight.id ? 'Reservando...' : 'Reservar'}
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
