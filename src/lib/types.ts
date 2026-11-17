@@ -26,3 +26,23 @@ export interface User {
   lastName: string;
   role: string;
 }
+
+export interface Flight {
+  id: number;
+  flightNumber: string;
+  airlineName: string;
+  estDepartureTime: string;
+  estArrivalTime: string;
+  availableSeats: number;
+}
+
+export interface FlightSearchResponse {
+  items: Flight[];
+}
+
+export interface FlightSearchParams {
+  flightNumber?: string;
+  airlineName?: string;
+  estDepartureTimeFrom?: string;
+  estDepartureTimeTo?: string;
+}
