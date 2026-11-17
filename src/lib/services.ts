@@ -1,5 +1,6 @@
 import api from './api';
 import type {
+  Booking,
   CreatedResponse,
   Flight,
   FlightSearchParams,
@@ -28,4 +29,14 @@ export async function getCurrentUser(): Promise<User> {
 export async function searchFlights(params: FlightSearchParams): Promise<Flight[]> {
   const { data } = await api.get<FlightSearchResponse>('/flights/search', { params });
   return data.items ?? [];
+}
+
+export async function bookFlight(flightId: number): Promise<CreatedResponse> {
+  const { data } = await api.post<CreatedResponse>('/flights/book', { flightId });
+  return data;
+}
+
+export async function getBooking(id: number): Promise<Booking> {
+  const { data } = await api.get<Booking>(`/flights/book/${id}`);
+  return data;
 }
