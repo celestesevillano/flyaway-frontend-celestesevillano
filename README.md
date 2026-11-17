@@ -2,8 +2,7 @@
 
 Aplicación web para la reserva de vuelos del laboratorio de la Semana 14 del curso **CS2031 — Desarrollo Basado en Plataformas** (UTEC).
 
-**Autora:** Celeste Sevillano  
-**Stack:** React 19, TypeScript, Vite, Axios y React Router. Estilos propios en CSS plano.
+**Nombre:** Celeste Sevillano  
 
 ---
 
