@@ -64,7 +64,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="ana.garcia@utec.edu.pe"
+              placeholder="tu.email@utec.edu.pe"
               autoComplete="email"
             />
           </label>
@@ -75,7 +75,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password1"
+              placeholder="Tu contrasena"
               autoComplete="current-password"
             />
           </label>

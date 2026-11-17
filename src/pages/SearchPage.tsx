@@ -154,12 +154,6 @@ export default function SearchPage() {
 
       {searchError && <Alert kind="error">{searchError}</Alert>}
       {bookingError && <Alert kind="error">{bookingError}</Alert>}
-      {bookingResult && (
-        <Alert kind="success">
-          Reserva confirmada. ID de reserva: <strong>#{bookingResult.bookingId}</strong>{' '}
-          <Link to={`/bookings/${bookingResult.bookingId}`}>Ver detalle</Link>
-        </Alert>
-      )}
       {!isAuthenticated && (
         <Alert kind="info">
           <Link to="/login">Inicia sesion</Link> para poder reservar un vuelo.
@@ -228,6 +222,27 @@ export default function SearchPage() {
           </>
         )}
       </section>
+
+      {bookingResult && (
+        <div className="modal-overlay" onClick={() => setBookingResult(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-icon">\u2713</div>
+            <h2>Reserva confirmada</h2>
+            <p className="muted">
+              Tu reserva se creo correctamente.<br />
+              ID de reserva: <strong>#{bookingResult.bookingId}</strong>
+            </p>
+            <div className="modal-actions">
+              <Link className="btn btn-primary" to={`/bookings/${bookingResult.bookingId}`}>
+                Ver detalle
+              </Link>
+              <button type="button" className="btn btn-ghost" onClick={() => setBookingResult(null)}>
+                Seguir buscando
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
